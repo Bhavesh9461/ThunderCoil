@@ -11,6 +11,8 @@ import { connectDB } from "./lib/db.js";
 const app = express()
 const PORT = process.env.PORT
 
+// some setup code
+app.use(express.json())
 
 /** use routes */
 app.use("/api/auth", authRoutes)
