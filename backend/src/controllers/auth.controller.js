@@ -62,16 +62,14 @@ export async function signup(req, res) {
      * @status todo completed ✅
      */
     try {
-
       await upsertStreamUser({
         id: newUser._id.toString(),
         name: newUser.fullName,
         image: newUser.profilePic || "",
       });
       console.log(`Stream user created for ${newUser.fullName}`);
-    
     } catch (error) {
-        console.log("Error creating in Stream user: ", error);
+      console.log("Error creating in Stream user: ", error);
     }
 
     /**
@@ -176,4 +174,77 @@ export function logout(req, res) {
     success: true,
     message: "Logout successfull.",
   });
+}
+
+export async function onboard(req, res) {
+  try {
+    const userId = req.user._id;
+
+    const { fullName, bio, nativeLanguage, learningLanguage, location } =
+      req.body;
+
+    if (
+      !fullName ||
+      !bio ||
+      !nativeLanguage ||
+      !learningLanguage ||
+      !location
+    ) {
+      return res.status(400).json({
+        message: "All fields are required.",
+        missingFileds: [
+          !fullName && "fullname",
+          !bio && "bio",
+          !nativeLanguage && "nativeLanguage",
+          !learningLanguage && "learningLanguage",
+          !location && "location",
+        ].filter(Boolean),
+      });
+    }
+
+    /**
+     * @description update a existing user in db
+     */
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        ...req.body,
+        isOnboarded: true,
+      },
+      { returnDocument: "after" },
+    ); // or you can use ` returnDocument: "after" ` bcz new is old version
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found!",
+      });
+    }
+
+    /**
+     * @TODO UPDATE the user info in STREAM platform
+     * @status completed todo ✅
+     */
+    try {
+      await upsertStreamUser({
+        id: updatedUser._id.toString(),
+        name: updatedUser.fullName,
+        image: updatedUser.profilePic || "",
+      });
+
+      console.log(`Stream user updated after onboarding for ${updatedUser.fullName}`);
+
+    } catch (streamError) {
+        console.log("Error updating Stream user during onboarding: ", streamError.message);
+    }
+
+    res.status(200).json({
+      success: true,
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error in onboard controller: ", error);
+    res.status(500).json({
+      message: "Internal Server Error!",
+    });
+  }
 }

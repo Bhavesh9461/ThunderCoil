@@ -1,5 +1,6 @@
 import express from "express"
 import "dotenv/config";
+import cookieParser from "cookie-parser";
 
 /**
  * @description import routes
@@ -12,7 +13,8 @@ const app = express()
 const PORT = process.env.PORT
 
 // some setup code
-app.use(express.json())
+app.use(express.json())  // to access body's content
+app.use(cookieParser()) // to access token from browser
 
 /** use routes */
 app.use("/api/auth", authRoutes)
