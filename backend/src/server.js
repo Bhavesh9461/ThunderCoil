@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
  * @description import routes
  */
 import authRoutes from "./routes/auth.route.js";
+import userRoutes from "./routes/user.route.js";
 import { connectDB } from "./lib/db.js";
 
 
@@ -18,6 +19,8 @@ app.use(cookieParser()) // to access token from browser
 
 /** use routes */
 app.use("/api/auth", authRoutes)
+app.use("/api/users", userRoutes)
+app.use("/api/chat", chatRoutes)
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`);
