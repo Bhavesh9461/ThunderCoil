@@ -1,6 +1,7 @@
 import express from "express"
 import "dotenv/config";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 
 /**
  * @description import routes
@@ -15,6 +16,10 @@ const app = express()
 const PORT = process.env.PORT
 
 // some setup code
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}))   // this allow to accept cookies from frontend
 app.use(express.json())  // to access body's content
 app.use(cookieParser()) // to access token from browser
 
