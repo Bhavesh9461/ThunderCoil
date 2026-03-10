@@ -1,0 +1,35 @@
+export const LANGUAGES = [
+  "English",
+  "Spanish",
+  "French",
+  "German",
+  "Hindi",
+  "Gujarati",
+  "Chinese",
+  "Japanese",
+  "Korean",
+  "Arabic",
+  "Russian",
+  "Portuguese",
+  "Italian",
+  "Turkish",
+  "Dutch"
+];
+
+export const LANGUAGE_TO_FLAG = {
+  english: "gb",
+  spanish: "es",
+  french: "fr",
+  german: "de",
+  hindi: "in",
+  gujarati: "in",
+  chinese: "cn",
+  japanese: "jp",
+  korean: "kr",
+  arabic: "sa",
+  russian: "ru",
+  portuguese: "pt",
+  italian: "it",
+  turkish: "tr",
+  dutch: "nl",
+};

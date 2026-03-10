@@ -20,7 +20,9 @@ const SignUpPage = () => {
   } = useMutation({
     mutationKey: ["signup"],
     mutationFn: signup,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+    onSuccess: () => {
+      toast.success("Account registered successfully.")
+      queryClient.invalidateQueries({ queryKey: ["authUser"] })}
   });
 
   const handleSignup = (e) => {
