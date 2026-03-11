@@ -3,6 +3,7 @@ import { CloudLightning } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router";
 import { signup } from "../lib/api.js";
+import useSignUp from "../hooks/useSignUp.js";
 
 const SignUpPage = () => {
   const [signupData, setSignupData] = useState({
@@ -11,19 +12,24 @@ const SignUpPage = () => {
     password: "",
   });
 
-  const queryClient = useQueryClient();
+  /**
+   * @desc before seperate hook code was below
+   */
+  // const queryClient = useQueryClient();
 
-  const {
-    mutate: signupMutation,
-    isPending,
-    error,
-  } = useMutation({
-    mutationKey: ["signup"],
-    mutationFn: signup,
-    onSuccess: () => {
-      toast.success("Account registered successfully.")
-      queryClient.invalidateQueries({ queryKey: ["authUser"] })}
-  });
+  // const {
+  //   mutate: signupMutation,
+  //   isPending,
+  //   error,
+  // } = useMutation({
+  //   mutationKey: ["signup"],
+  //   mutationFn: signup,
+  //   onSuccess: () => {
+  //     toast.success("Account registered successfully.")
+  //     queryClient.invalidateQueries({ queryKey: ["authUser"] })}
+  // });
+
+  const {isPending,error,signupMutation} = useSignUp()
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -43,8 +49,8 @@ const SignUpPage = () => {
           <div className="mb-4 flex items-center justify-start gap-2 ">
             <CloudLightning className="size-9 text-primary " />
             <span
-              className="text-3xl fond-bold font-mono bg-clip-text text-transparent
-                    bg-gradient-to-r from-primary to-info tracking-wider "
+              className="text-3xl font-bold font-mono bg-clip-text text-transparent
+                    bg-gradient-to-r from-primary to-accent tracking-wider "
             >
               ThunderCoil
             </span>

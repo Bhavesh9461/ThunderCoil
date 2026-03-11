@@ -6,10 +6,27 @@ export const signup = async (signupData) => {
   return response.data;
 };
 
+// for login
+export const login = async (loginData) => {
+  const response = await axiosInstance.post("/auth/login", loginData);
+  return response.data;
+};
+
+// for logout
+export const logout = async () => {
+  const response = await axiosInstance.post("/auth/logout");
+  return response.data;
+};
+
 // get user
 export const getAuthUser = async () => {
-  const res = await axiosInstance.get("/auth/me");
-  return res.data;
+  try {
+    const res = await axiosInstance.get("/auth/me");
+    return res.data;
+  } catch (error) {
+    console.log("Error in getAuthUser Api", error);
+    return null
+  }
 };
 
 // complete onboarding

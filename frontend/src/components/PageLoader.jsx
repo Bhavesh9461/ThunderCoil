@@ -1,12 +1,16 @@
 import { LoaderIcon, PlugZap } from 'lucide-react'
 import React from 'react'
+import { useThemeStore } from '../store/useThemeStore.js'
 
 const PageLoader = () => {
+
+  const {theme} = useThemeStore()
+
   return (
-    <div className='min-h-screen flex items-center justify-center relative'>
+    <div className='min-h-screen flex items-center justify-center relative' data-theme={theme}>
        {/* <LoaderIcon className="animate-spin size-10 text-primary" /> */}
        <PlugZap className="animate-ping size-12 text-primary" />
-       <PlugZap className="animate-pulse size-14 text-primary/70 absolute" />
+       <PlugZap className="animate-pulse size-14 text-primary/60 absolute" />
     </div>
   )
 }
