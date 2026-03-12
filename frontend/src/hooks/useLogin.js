@@ -12,6 +12,7 @@ const useLogin = () => {
       onSuccess: ()=> {
         toast.success("LogIn successfull.")
         queryClient.invalidateQueries({ queryKey: ["authUser"]})
+        queryClient.invalidateQueries({ queryKey: ["friends"] })
       }
     })
 

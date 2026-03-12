@@ -40,7 +40,7 @@ router.put("/friend-request/:id/accept", acceptFriendRequest)
 
 /**
  * @route GET /api/users/friend-requests
- * @description get all friend requests that a recipient gets
+ * @description get all friend requests that a recipient or I gets
  * @access PRIVATE
  */
 router.get("/friend-requests", getFriendRequests)

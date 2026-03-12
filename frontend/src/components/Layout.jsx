@@ -4,7 +4,7 @@ import Navbar from './Navbar.jsx'
 
 const Layout = ({children,showSidebar=false}) => {
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen bg-base-100'>
         <div className='flex'>
             {showSidebar && <Sidebar/> }
 
