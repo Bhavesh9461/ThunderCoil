@@ -45,7 +45,7 @@ export async function signup(req, res) {
      * @description create default avatar for profilePic
      */
     const idx = Math.floor(Math.random() * 100) + 1; // generate num b/w 1-100
-    const randomAvatar = `https://api.dicebear.com/9.x/toon-head/svg?seed=${idx}`;
+    const randomAvatar = `https://api.dicebear.com/9.x/toon-head/svg?seed=${idx}.png`;
 
     /**
      * @description finally create a new user
