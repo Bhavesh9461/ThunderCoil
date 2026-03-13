@@ -9,6 +9,7 @@ const Navbar = () => {
   const { authUser } = useAuthUser();
   const location = useLocation();
   const isChatPage = location.pathname?.startsWith("/chat");
+  const isHomePage = location.pathname?.startsWith("/")
 
   const { logoutMutation } = useLogout();
 
@@ -17,22 +18,22 @@ const Navbar = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-end w-full">
           {/* LOGO - ONLY IN THE CHAT PAGE */}
-          {isChatPage && (
+          {isChatPage || isHomePage && (
             <div className="sm:pl-5">
-              <Link to="/" className="flex items-center gap-2.5">
-                <CloudLightning className="size-5 sm:size-9 text-primary" />
-                <span className="text-xl sm:text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent tracking-wider">
+              <Link to="/" className="flex items-center gap-1.5 sm:gap-2.5">
+                <CloudLightning className="size-4 sm:size-7 md:size-9 text-primary" />
+                <span className="text-md sm:text-xl md:text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent tracking-wider">
                   ThunderCoil
                 </span>
               </Link>
             </div>
           )}
 
-          <div className="flex items-center gap-3 sm:gap-4 ml-auto">
+          <div className="flex items-center gap-1 sm:gap-3 md:gap-4 ml-auto">
             {/* NOTIFICATIONS LINK */}
             <Link to="/notifications">
               <button className="btn btn-ghost btn-circle">
-                <BellIcon className="h-6 w-6 text-base-content opacity-70" />
+                <BellIcon className="h-4 w-4  sm:h-6 sm:w-6 text-base-content opacity-70" />
               </button>
             </Link>
 
@@ -42,7 +43,7 @@ const Navbar = () => {
             {/* USER AVATAR */}
             <Link to="/">
               <div className="avatar">
-                <div className="w-9 rounded-full border border-base-300">
+                <div className="w-7 sm:w-9 rounded-full border border-base-300">
                   <img
                     src={authUser?.profilePic}
                     alt="User Avatar"
@@ -57,7 +58,7 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle"
               onClick={logoutMutation}
             >
-              <LogOutIcon className="h-6 w-6 text-base-content opacity-70" />
+              <LogOutIcon className="h-4 w-4  sm:h-6 sm:w-6 text-base-content opacity-70" />
             </button>
           </div>
         </div>
