@@ -7,7 +7,13 @@ import {
   getUserFriends,
   sendFriendRequest,
 } from "../lib/api.js";
-import { CheckCircleIcon, MapPinIcon, UserIcon, UserPlusIcon, UsersIcon } from "lucide-react";
+import {
+  CheckCircleIcon,
+  MapPinIcon,
+  UserIcon,
+  UserPlusIcon,
+  UsersIcon,
+} from "lucide-react";
 import FriendCard, { getLanguageFlag } from "../components/FriendCard.jsx";
 import NoFriendsFound from "../components/NoFriendsFound.jsx";
 import NoUsersFound from "../components/NoUsersFound.jsx";
@@ -16,6 +22,7 @@ import { capitalize } from "../lib/utils.js";
 const HomePage = () => {
   const queryClient = useQueryClient();
   const [outgoingRequestsIds, setOutgoingRequestsIds] = useState(new Set());
+  const [pendingRequestId, setPendingRequestId] = useState(null);
 
   const { data: friends = [], isLoading: loadingFriends } = useQuery({
     queryKey: ["friends"],
@@ -35,8 +42,14 @@ const HomePage = () => {
   const { mutate: sendRequestMutation, isPending } = useMutation({
     mutationKey: ["sendRequest"],
     mutationFn: sendFriendRequest,
+    onMutate: (userId) => {
+      setPendingRequestId(userId);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["outgoingFriendReqs"] });
+    },
+    onSettled: () => {
+      setPendingRequestId(null);
     },
   });
 
@@ -156,9 +169,13 @@ const HomePage = () => {
                         onClick={() => {
                           sendRequestMutation(user._id);
                         }}
-                        disabled={hasRequestBeenSent || isPending}
+                        disabled={
+                          hasRequestBeenSent || pendingRequestId === user._id
+                        }
                       >
-                        {hasRequestBeenSent ? (
+                        {pendingRequestId === user._id ? (
+                          <span className="loading loading-spinner loading-xs"></span>
+                        ) : hasRequestBeenSent ? (
                           <>
                             <CheckCircleIcon className="size-4 mr-2" />
                             Request sent
@@ -168,9 +185,8 @@ const HomePage = () => {
                             <UserPlusIcon className="size-4 mr-2" />
                             Send Friend Request
                           </>
-                        ) }
+                        )}
                       </button>
-
                     </div>
                   </div>
                 );
@@ -184,5 +200,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
