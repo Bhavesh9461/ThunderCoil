@@ -1,0 +1,9 @@
+{
+  "appId": "com.bhavesh.thundercoil",
+  "appName": "ThunderCoil",
+  "webDir": "dist",
+  "server": {
+    "url": "https://thundercoil.onrender.com/",
+    "cleartext": true
+  }
+}
